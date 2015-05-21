@@ -86,13 +86,13 @@ x.train <- data.table(read.fwf(infile
 infile <- "./UCI HAR Dataset/train/Y_train.txt"
 
 width.vector <- 1
-features.labels <- "Activity_ID"
+activity.labels <- "Activity_ID"
 
 y.train <- data.table(read.fwf(infile
                                , header = F
                                , widths = width.vector
                                , sep = ","
-                               , col.names = features.labels)) 
+                               , col.names = activity.labels)) 
 
 #########################################################################
 #                 Subject Train processing
@@ -100,12 +100,12 @@ y.train <- data.table(read.fwf(infile
 
 infile <- "./UCI HAR Dataset/train/subject_train.txt"
 
-features.labels <- "Subject_ID"
+subject.labels <- "Subject_ID"
 
 subject.train <- data.table(read.table(infile
                                      , header = F
                                      , sep = ","
-                                     , col.names = features.labels)) 
+                                     , col.names = subject.labels)) 
 
 train.1 <- cbind(subject.train, y.train) #combine subject and activity code
 train.1 <- cbind(train.1, x.train) #combine subj/act with training
@@ -117,8 +117,6 @@ train.1 <- cbind(train.1, x.train) #combine subj/act with training
 infile <- "./UCI HAR Dataset/test/X_test.txt"
 
 width.vector <- (rep(16,length(std.mean.vector)))
-
-features.labels <- features[std.mean.vector, 2]
 
 x.test <- data.table(read.fwf(infile
                               , header = F
@@ -135,13 +133,12 @@ x.test <- data.table(read.fwf(infile
 infile <- "./UCI HAR Dataset/test/Y_test.txt"
 
 width.vector <- 1
-features.labels <- "Activity_ID"
 
 y.test <- data.table(read.fwf(infile
                               , header = F
                               , widths = width.vector
                               , sep = ","
-                              , col.names = features.labels)) 
+                              , col.names = activity.labels)) 
 
 #########################################################################
 #                 Subject Test processing
@@ -149,12 +146,10 @@ y.test <- data.table(read.fwf(infile
 
 infile <- "./UCI HAR Dataset/test/subject_test.txt"
 
-features.labels <- "Subject_ID"
-
 subject.test <- data.table(read.table(infile
                                     , header = F
                                     , sep = ","
-                                    , col.names = features.labels)) 
+                                    , col.names = subject.labels)) 
 
 test.1 <- cbind(subject.test, y.test) #combine subject and activity code
 test.1 <- cbind(test.1, x.test) #combine sub/act with test
@@ -168,107 +163,34 @@ train.Test.1 <- rbind(test.1, train.1) #combine test and train data
 infile <- "./UCI HAR Dataset/activity_labels.txt"
 
 width.vector <- 1
-features.labels <- c("Activity_ID", "Activity")
+activity.labels <- c("Activity_ID", "Activity")
 
 activities <- data.table(read.table(infile
                                     , header = F
                                     , sep = " "
-                                    , col.names = features.labels)) 
+                                    , col.names = activity.labels)) 
 
 train.Test.Complete <- join(activities,train.Test.1, by = "Activity_ID")
 
 ############################################################################
-#    clean up column names  - convert t to Time, f to Freq, and '.' to '_'
-#   (no easy way to make 82 variables readable without listing them out)
+#    clean up column names  - convert t to Time, f to Freq, and '-' to '_'
+#                             removed ()
+#    remove Activity_ID
 ############################################################################
-new.column.labels  <- c("Activity_ID",
-                        "Activity",
-                        "Subject_ID",
-                        "Time_Body_Acc_std_X",
-                        "Time_Body_Acc_std_Y",
-                        "Time_Body_Acc_std_Z",
-                        "Time_Gravity_Acc_std_X",
-                        "Time_Gravity_Acc_std_Y",
-                        "Time_Gravity_Acc_std_Z",
-                        "Time_Body_AccJerk_std_X",
-                        "Time_Body_AccJerk_std_Y",
-                        "Time_Body_AccJerk_std_Z",
-                        "Time_Body_Gyro_std_X",
-                        "Time_Body_Gyro_std_Y",
-                        "Time_Body_Gyro_std_Z",
-                        "Time_Body_Gyro_Jerk_std_X",
-                        "Time_Body_Gyro_Jerk_std_Y",
-                        "Time_Body_Gyro_Jerk_std_Z",
-                        "Time_Body_Acc_Mag_std",
-                        "Time_Gravity_Acc_Mag_std",
-                        "Time_Body_Acc_Jerk_Mag_std",
-                        "Time_Body_Gyro_Mag_std",
-                        "Time_Body_Gyro_Jerk_Mag_std",
-                        "Freq_Body_Acc_std_X",
-                        "Freq_Body_Acc_std_Y",
-                        "Freq_Body_Acc_std_Z",
-                        "Freq_Body_AccJerk_std_X",
-                        "Freq_Body_AccJerk_std_Y",
-                        "Freq_Body_AccJerk_std_Z",
-                        "Freq_Body_Gyro_std_X",
-                        "Freq_Body_Gyro_std_Y",
-                        "Freq_Body_Gyro_std_Z",
-                        "Freq_Body_Acc_Mag_std",
-                        "Freq_Body_Body_Acc_Jerk_Mag_std",
-                        "Freq_Body_Body_Gyro_Mag_std",
-                        "Freq_Body_Body_Gyro_Jerk_Mag_std",
-                        "Time_Body_Acc_mean_X",
-                        "Time_Body_Acc_mean_Y",
-                        "Time_Body_Acc_mean_Z",
-                        "Time_Gravity_Acc_mean_X",
-                        "Time_Gravity_Acc_mean_Y",
-                        "Time_Gravity_Acc_mean_Z",
-                        "Time_Body_Acc_Jerk_mean_X",
-                        "Time_Body_Acc_Jerk_mean_Y",
-                        "Time_Body_Acc_Jerk_mean_Z",
-                        "Time_Body_Gyro_mean_X",
-                        "Time_Body_Gyro_mean_Y",
-                        "Time_Body_Gyro_mean_Z",
-                        "Time_Body_Gyro_Jerk_mean_X",
-                        "Time_Body_Gyro_Jerk_mean_Y",
-                        "Time_Body_Gyro_Jerk_mean_Z",
-                        "Time_Body_Acc_Mag_mean",
-                        "Time_Gravity_Acc_Mag_mean",
-                        "Time_Body_Acc_Jerk_Mag_mean",
-                        "Time_Body_Gyro_Mag_mean",
-                        "Time_Body_Gyro_Jerk_Mag_mean",
-                        "Freq_Body_Acc_mean_X",
-                        "Freq_Body_Acc_mean_Y",
-                        "Freq_Body_Acc_mean_Z",
-                        "Freq_Body_Acc_mean_Freq_X",
-                        "Freq_Body_Acc_mean_Freq_Y",
-                        "Freq_Body_Acc_mean_Freq_Z",
-                        "Freq_Body_Acc_Jerk_mean_X",
-                        "Freq_Body_Acc_Jerk_mean_Y",
-                        "Freq_Body_Acc_Jerk_mean_Z",
-                        "Freq_Body_Acc_Jerk_mean_Freq_X",
-                        "Freq_Body_Acc_Jerk_mean_Freq_Y",
-                        "Freq_Body_Acc_Jerk_mean_Freq_Z",
-                        "Freq_Body_Gyro_mean_X",
-                        "Freq_Body_Gyro_mean_Y",
-                        "Freq_Body_Gyro_mean_Z",
-                        "Freq_Body_Gyro_mean_Freq_X",
-                        "Freq_Body_Gyro_mean_Freq_Y",
-                        "Freq_Body_Gyro_mean_Freq_Z",
-                        "Freq_Body_Acc_Mag_mean",
-                        "Freq_Body_Acc_Mag_mean_Freq",
-                        "Freq_Body_Body_Acc_Jerk_Mag_mean",
-                        "Freq_Body_Body_Acc_Jerk_Mag_mean_Freq",
-                        "Freq_Body_Body_Gyro_Mag_mean",
-                        "Freq_Body_Body_Gyro_Mag_mean_Freq",
-                        "Freq_Body_Body_Gyro_Jerk_Mag_mean",
-                        "Freq_Body_Body_Gyro_Jerk_Mag_mean_Freq")
-
-setnames(train.Test.Complete, new.column.labels)
-
 tidy.Train.Test.Output <-  select(train.Test.Complete, -1) # remove Activity ID, not needed with the label
 
-write.table(tidy.Train.Test.Output, "tidy_Train_Test_Output.txt",  row.name=FALSE)
+features.labels <- gsub("-", "_", features.labels)
+features.labels <- gsub("\\()", "", features.labels)
+features.labels <- gsub("^tGravity", "timeGravity", features.labels)
+features.labels <- gsub("^tBody", "timeBody", features.labels)
+features.labels <- gsub("^fBody", "freqBody", features.labels)
+
+setnames(tidy.Train.Test.Output, 
+         c("Activity", "Subject_ID", features.labels))
+
+
+write.table(tidy.Train.Test.Output, 
+           "tidy_Train_Test_Output.txt", row.name=FALSE)
 
 View(tidy.Train.Test.Output)
 
@@ -281,7 +203,8 @@ tidy.Summary <- (tidy.Train.Test.Output %>%
                    summarise_each (funs(mean), 3:81) %>%
                    arrange(Activity, Subject_ID))
 
-write.table(tidy.Summary, "tidy_summary.txt",  row.name=FALSE)
+write.table(tidy.Summary, 
+           "tidy_summary.txt",  row.name=FALSE)
 
 View(tidy.Summary)
 
@@ -289,6 +212,6 @@ View(tidy.Summary)
 #    the end
 ############################################################################
 
-dateDownloaded <- date()
-dateDownloaded
+dateCompleted <- date()
+dateCompleted
 

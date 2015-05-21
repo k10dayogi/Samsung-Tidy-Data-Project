@@ -54,10 +54,10 @@ The Train and Test data is combined into a single data.table
 The activity descriptions are joined to the activity label data (y) and joined to the combined Train.Test data.table.
 
 ###Output Files###
-The Activity ID is removed as it is no longer needed.  The final data.table is called **tidy.Train.Test.Output**.
+The Activity ID is removed as it is no longer needed.  Column names are cleaned up.  The final data.table is called **tidy.Train.Test.Output**.
 This result is output as a text file "tidy_Train_Test_Output.txt".
 
-The data is further subsetted to only include the activity, subject, and then the mean() function is applied. The data.table is called **tidy.Summary**
+The data is further sub-setted to only include the activity, subject, and then the mean() function is applied. The data.table is called **tidy.Summary**
 
 This tidy dataset is output as a text file "tidy_summary.txt".
 

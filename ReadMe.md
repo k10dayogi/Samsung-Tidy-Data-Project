@@ -38,7 +38,7 @@ definition of "mean" and "std", so it was safer to err on the side of selecting 
 6. Combine TRAIN and TEST data.
 
 7. Clean up the column names, replacing t prefix for "Time", f for "Freq"
-adding "_ " between words to facilitate database processing, and remove the Activity-ID to create a Tidy dataset of the data,  "tidy_Train_Test_Output.txt".
+changing "-" for "_"  to facilitate database processing, removing imbedded () and remove the Activity-ID to create a Tidy dataset of the data,  "tidy_Train_Test_Output.txt".
 
 8. Group and summarize the mean of the dataset into a 180x81 table
  "tidy_summary.txt" using dplyr functions.
