@@ -4,7 +4,8 @@ author: "Y2Kaufman"
 date: "Sunday, May 17, 2015"
 output: html_document
 ---
-##README Tidy Data Project - Samsung Fitness Experiment##
+##README Tidy Data Project - 
+Samsung Fitness Experiment##
 
 
 ##Introduction##
