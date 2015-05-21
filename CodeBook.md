@@ -62,7 +62,7 @@ The data is further sub-setted to only include the activity, subject, and then t
 
 This tidy dataset is output as a text file "tidy_summary.txt".
 
-###Code Book###
+###Data Dictionary###
 
 1. Activity - Character - describes the exercise performed by the subject
 	- WALKING
