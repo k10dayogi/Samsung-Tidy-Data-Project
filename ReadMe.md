@@ -11,12 +11,17 @@ output: html_document
 ##Introduction##
 This document describes the steps to create the two outputs dataframes of the Samsung fitness experiment data.  Files containing Training and Test data are combined together, using reference files containing labels for the Activities. 
 
-The script *run_analysis.R* is self contained.  It can be run start-to-finish to produce the output tidy dataset.  
+The repo contains a Codebook.md file which details on the data variables and specific processing.
+
+The repo contains script *run_analysis.R* which is self contained.  It can be run start-to-finish to produce the output tidy dataset.  
 
 The experiment was carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, they captured 3-axial linear acceleration and 3-axial angular velocity. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
 
+The script was developed using R v3.1.3 running on Windows 8.1 Lenovo laptop using RStudio Version 0.98.1103
+
 
 ##Package Set Up##
+
 Four packages are required: plyr, dplyr, data.tables, tidyr.  
 At the top of the script are the install.packages (if needed) and library commands to load them.  These steps can be skipped if the packages are already loaded.
 
